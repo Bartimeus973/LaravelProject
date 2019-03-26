@@ -25,15 +25,30 @@ class ApiController extends Controller
 
                 $avatars = Avatar::where( 'users_id', $idUser[0]->id )->get();
 
-                foreach($avatars as $avatar){
-        
-                    echo $avatar->picture . '<br>';
+                if($avatars->isEmpty()){
+
+                    return response()->json([
+                        'avatar' => 'empty'
+                    ]);
                 }
+                else{
+                    
+                    foreach($avatars as $avatar){
+        
+                        echo $avatar->picture . '<br>';
+                    }
+                }
+    
             }
         }
         else{
 
-            return 'API v1.0';
+            return response()->json([
+                'version' => '1.0',
+                'avatar size' => 'undefined',
+                'default avatar size' => 'undefined',
+                'supported format' => 'JPEG, JPG, PNG'
+            ]);
         }
     }
 }
