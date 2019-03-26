@@ -21,7 +21,9 @@ class ApiController extends Controller
 
             if( $idUser->isEmpty() ){
 
-                return 'Aucun avatar ne correspond à ce nom de compte ...';
+                return response()->json([
+                    'avatar' => 'user not found'
+                ]);
             }
             else{
 
@@ -37,7 +39,7 @@ class ApiController extends Controller
                 else{
 
                     $tab = array();
-                    
+
                     foreach($avatars as $avatar){
         
                         $data = [
@@ -54,7 +56,7 @@ class ApiController extends Controller
         else{
 
             return response()->json([
-                'version' => '1.0',
+                'version' => '2.0',
                 'avatar size' => 'undefined',
                 'default avatar size' => 'undefined',
                 'supported format' => 'JPEG, JPG, PNG'

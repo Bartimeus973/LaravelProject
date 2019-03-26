@@ -34,9 +34,12 @@ class HomeController extends Controller
 
         $this->validate( $request, 
             [ 
-            'img' => 'required|image|mimes:jpeg,jpg,png',
+            'img' => 'required|mimes:jpeg,jpg,png',
+            'email' => 'required|email'
+            ],
+            [
             'img.required' => 'Vous devez sélectionner une image',
-            'email' => 'required|email',
+            'img.mimes' => 'Formats d\'image autorisés : JPEG, JPG ou PNG',
             'email.required' => 'Vous devez saisir un e-mail'
             ]);
 
