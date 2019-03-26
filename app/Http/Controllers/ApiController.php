@@ -8,6 +8,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Avatar;
 use App\User;
+use URL;
+
 
 class ApiController extends Controller
 {
@@ -24,6 +26,7 @@ class ApiController extends Controller
             else{
 
                 $avatars = Avatar::where( 'users_id', $idUser[0]->id )->get();
+                $url = URL::to('/');
 
                 if($avatars->isEmpty()){
 
@@ -32,11 +35,18 @@ class ApiController extends Controller
                     ]);
                 }
                 else{
+
+                    $tab = array();
                     
                     foreach($avatars as $avatar){
         
-                        echo $avatar->picture . '<br>';
+                        $data = [
+                            'e-mail' => $avatar->email,
+                            'avatar' => $url . '/' . $avatar->picture
+                        ];
+                        array_push($tab, $data);
                     }
+                    return response()->json($tab);
                 }
     
             }
