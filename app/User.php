@@ -33,6 +33,6 @@ class User extends Authenticatable
 
     public function avatars()
     {
-        return $this->hasMany('App\Avatar');
+        return $this->hasMany('App\Avatar'); //Connect a users data to many avatars data
     }
 }
