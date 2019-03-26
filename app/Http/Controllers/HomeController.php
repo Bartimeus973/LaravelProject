@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
+use App\Avatar;
 
 
 class HomeController extends Controller
@@ -28,21 +30,31 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function form(Request $request){
+    public function imgUpload(Request $request){
 
         $this->validate( $request, 
-            [ 'img' => 'required|image|mimes:jpeg,png,jpg|max:2048' ],
-            ['img.required' => 'le champ doit être saisi',]
-        );
+            [ 
+            'img' => 'required|image|mimes:jpeg,jpg,png',
+            'img.required' => 'Vous devez sélectionner une image',
+            'email' => 'required|email',
+            'email.required' => 'Vous devez saisir un e-mail'
+            ]);
 
-        $input = $request->input('img');
+        $imageName = time().'.'.request()->img->getClientOriginalExtension();
+        request()->img->move(public_path('images'), $imageName);
 
-/*
-        $updateName = Bozo::whereId(1)->first();
-        $updateName->nom = $input;
-        $updateName->save();
-        
-        return redirect()->route('bozoRoute', $input);*/
+        $mail = request()->email;
+        $userId = \Auth::user()->id;
+
+        $data = [
+            'email' => $mail,
+            'picture' => 'images/' . $imageName,
+            'users_id' => $userId
+        ];
+
+        Avatar::insert($data);
+
+        return back()->with('success','Image envoyée avec succès !');
 
     }
 }

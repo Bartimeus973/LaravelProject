@@ -14,9 +14,19 @@
                         </div>
                     @endif
 
-                    {!! Form::open(['route' => 'formRoute']) !!}
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
+
+                    {!! Form::open(['route' => 'formRoute', 'files' => true]) !!}
     
-                        {!! Form::file('img') !!}
+                        Adresse e-mail : 
+                        {!! Form::email('email') !!}<br><br>
+                        Image à associer : 
+                        {!! Form::file('img') !!}<br><br>
                         {!! Form::submit('envoyer') !!}
 
                     {!! Form::close() !!}
