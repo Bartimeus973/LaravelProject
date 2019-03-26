@@ -20,3 +20,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/api/{userName?}', 'ApiController@displayAvatars')->name('showApi');
+
+Route::post('/profile/update', 'HomeController@updateProfile')->name('profile.update');
