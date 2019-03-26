@@ -17,18 +17,18 @@ class ApiController extends Controller
 
             $dataUser = User::whereName($userName)->get();
 
-            if($dataUser != ''){
+            if( $dataUser->isEmpty() ){
 
-                return $dataUser;
+                return 'aucune icône ne correspond à ce nom de compte ...';
             }
             else{
 
-                return 'aucune icône ne correspond à ce nom de compte ...';
+                return $dataUser;
             }
         }
         else{
 
-            return 'false';
+            return 'API v1.0';
         }
     }
 }
