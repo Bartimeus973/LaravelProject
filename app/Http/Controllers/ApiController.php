@@ -15,21 +15,24 @@ class ApiController extends Controller
 {
     public function displayAvatars($userName = ''){
 
+        // si le pseudo d'utilisateur est renseigné
         if($userName){
 
+            // on récupère l'id du pseudo renseigné
             $idUser = User::whereName($userName)->get();
 
+            // si il n'y a pas d'utilisateur, on renvoie 404
             if( $idUser->isEmpty() ){
 
-                return response()->json([
-                    'avatar' => 'user not found'
-                ]);
+                return response()->view('errors/404', [], 404);
             }
             else{
 
+                // on récupère les avatars correspondants à l'id récupéré
                 $avatars = Avatar::where( 'users_id', $idUser[0]->id )->get();
                 $url = URL::to('/');
 
+                // si il n'y a pas d'avatar, on renvoie un json vide
                 if($avatars->isEmpty()){
 
                     return response()->json([
@@ -40,6 +43,7 @@ class ApiController extends Controller
 
                     $tab = array();
 
+                    // on rempli un tableau avec les avatars liés au compte 
                     foreach($avatars as $avatar){
         
                         $data = [
@@ -48,18 +52,20 @@ class ApiController extends Controller
                         ];
                         array_push($tab, $data);
                     }
+                    // on retourne le tableau sous forme de JSON
                     return response()->json($tab);
                 }
     
             }
         }
+        // si il n'y a pas de pseudo renseigné, on renvoie un JSON d'information sur l'API
         else{
 
             return response()->json([
                 'version' => '2.0',
-                'avatar size' => 'undefined',
-                'default avatar size' => 'undefined',
-                'supported format' => 'JPEG, JPG, PNG'
+                'avatar sizes' => ['50*50', '150*150', '300*300'],
+                'default avatar size' => '150*150',
+                'supported format' => ['JPEG','JPG','PNG']
             ]);
         }
     }

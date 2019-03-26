@@ -32,6 +32,7 @@ class HomeController extends Controller
 
     public function imgUpload(Request $request){
 
+        // on vérifie les champs saisis par l'utilisateur
         $this->validate( $request, 
             [ 
             'img' => 'required|mimes:jpeg,jpg,png',
@@ -43,6 +44,7 @@ class HomeController extends Controller
             'email.required' => 'Vous devez saisir un e-mail'
             ]);
 
+        // on renomme l'image uploadée et on l'enregistre dans public/images
         $imageName = time().'.'.request()->img->getClientOriginalExtension();
         request()->img->move(public_path('images'), $imageName);
 
@@ -55,8 +57,10 @@ class HomeController extends Controller
             'users_id' => $userId
         ];
 
+        // On ajoute les données saisies ainsi que l'url de l'image dans la table Avatar
         Avatar::insert($data);
 
+        // On retourne sur la page précédente avec un message de confirmation
         return back()->with('success','Image envoyée avec succès !');
 
     }
