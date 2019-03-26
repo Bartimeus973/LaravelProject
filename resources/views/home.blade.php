@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Espace utilisateur</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,7 +14,16 @@
                         </div>
                     @endif
 
-                    Vous êtes connecté !
+                    {!! Form::open(['route' => 'formRoute']) !!}
+    
+                        {!! Form::file('img') !!}
+                        {!! Form::submit('envoyer') !!}
+
+                    {!! Form::close() !!}
+
+                    @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                    @endforeach
                 </div>
             </div>
         </div>

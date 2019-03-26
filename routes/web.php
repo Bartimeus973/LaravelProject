@@ -19,4 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::post('/home', 'HomeController@form') -> name('formRoute');
+
 Route::get('/api/{userName?}', 'ApiController@displayAvatars')->name('showApi');
+
