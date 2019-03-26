@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use app\User;
 use app\Avatar;
 
+
 class HomeController extends Controller
 {
     use UploadTrait;
