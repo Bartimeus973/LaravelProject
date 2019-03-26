@@ -13,6 +13,10 @@
 Route::get('/', function () {
     return view('welcome');
 });*/
-Route::get('/inscription')->uses('Navigation@inscription')->name('inscription');
-Route::get('/accueil')->uses('Navigation@accueil')->name('accueil');
-Route::get('/gestion')->uses('Navigation@gestion')->name('gestion');
+Route::get('/inscription')->uses('Inscription@entree')->name('inscription');
+Route::get('/accueil')->uses('Accueil@entree')->name('accueil');
+Route::get('/identification')->uses('Identification@entree')->name('identification');
+Route::get('/gestion')->uses('Gestion@entree')->name('gestion');
+
+Route::post('/inscription', 'Inscription@sortie')->name('inscriptionPost');
+Route::post('/identification', 'Identification@sortie')->name('identificationPost');

@@ -1,0 +1,17 @@
+body{
+	color:#000000;
+	font-family:'Lucida Sans Unicode';
+	font-size:10px;
+	margin: 0;
+	text-align:justify;
+}
+
+#titreSite{
+    margin: auto;
+    text-align:center;
+}
+
+nav{
+	width: 90%;
+    margin: auto;
+}

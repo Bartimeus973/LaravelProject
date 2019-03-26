@@ -2,7 +2,7 @@
 namespace App\http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
-class Navigation extends Controller
+class Gestion extends Controller
 {
     /**
      * Handle the incoming request.
@@ -10,16 +10,8 @@ class Navigation extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function accueil()
-    {
-        return view('accueil');
-    }
-    public function inscription()
+    public function entree()
     {
         return view('gestion');
-    }
-    public function gestion()
-    {
-        return view('inscription');
     }
 }
