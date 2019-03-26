@@ -11,6 +11,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = factory(App\User::class, 10)->create(); 
+        $users = factory(App\User::class, 10)->create(); //Call 10 times the file database\factories\AvatarUser.php
     }
 }
