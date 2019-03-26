@@ -11,19 +11,24 @@ use App\User;
 
 class ApiController extends Controller
 {
-    public function display($userName = ''){
+    public function displayAvatars($userName = ''){
 
         if($userName){
 
-            $dataUser = User::whereName($userName)->get();
+            $idUser = User::whereName($userName)->get();
 
-            if( $dataUser->isEmpty() ){
+            if( $idUser->isEmpty() ){
 
-                return 'aucune icône ne correspond à ce nom de compte ...';
+                return 'Aucun avatar ne correspond à ce nom de compte ...';
             }
             else{
 
-                return $dataUser;
+                $avatars = Avatar::where( 'users_id', $idUser[0]->id )->get();
+
+                foreach($avatars as $avatar){
+        
+                    echo $avatar->picture . '<br>';
+                }
             }
         }
         else{

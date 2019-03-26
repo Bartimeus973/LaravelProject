@@ -19,4 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/api/{userName?}', 'ApiController@display')->name('showApi');
+Route::get('/api/{userName?}', 'ApiController@displayAvatars')->name('showApi');
