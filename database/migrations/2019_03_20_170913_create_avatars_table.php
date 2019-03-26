@@ -17,7 +17,7 @@ class CreateAvatarsTable extends Migration
             $table->bigIncrements('id');
             $table->string('email');
             $table->binary('picture');
-            $table->unsignedBigInteger('utilisateurs_id');
+            $table->unsignedBigInteger('users_id');
         });
     }
 
