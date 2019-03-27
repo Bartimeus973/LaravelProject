@@ -20,11 +20,10 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 // le middleware verified est utilisé pour vérifier le mail de l'utilisateur
-// n'étant pas parvenu à le configurer, le mail est envoyé dans les logs
 
-Route::get('/home', 'HomeController@index')/*->middleware('verified')*/->name('home');
+Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
 
-Route::get('/upload', 'ImgController@index')/*->middleware('verified')*/->name('imgUpload');
+Route::get('/upload', 'ImgController@index')->middleware('verified')->name('imgUpload');
 
 Route::post('/upload', 'ImgController@imgUpload')->name('formRoute');
 
