@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
@@ -10,7 +11,6 @@ use App\Avatar;
 
 class HomeController extends Controller
 {
-    use UploadTrait;
     /**
      * Create a new controller instance.
      *
@@ -20,7 +20,6 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
-
     /**
      * Show the application dashboard.
      *
@@ -28,6 +27,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('auth.home');
+        try{
+        $userId = \Auth::user()->id;
+        $avatars = DB::table('avatars')->select('URL')->where('users_id', '=', $userId)->get();
+        }
+        catch( \Exception $e ){
+            dd($e);
+        }
+        return view('home', ['avatars' => $avatars]);
     }
+
 }

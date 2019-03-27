@@ -20,6 +20,11 @@
                             <strong>{{ $message }}</strong>
                         </div>
                     @endif
+
+                    @foreach ( $avatars as $avatar)
+                    Liste des avatars:
+                    <p>Email: {{ $avatar->email }}  <img src="{{ $avatar->URL }}"/>   <button a href="">Modifier l'avatar</button><button a href ="">Supprimer l'avatar</button></p>
+                    @endforeach
                 </div>
             </div>
         </div>
