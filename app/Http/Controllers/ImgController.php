@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use App\Avatar;
+use Image;
 
 
 class ImgController extends Controller {
@@ -31,24 +32,33 @@ class ImgController extends Controller {
         'email.required' => 'Vous devez saisir un e-mail'
         ]);
 
-    // on renomme l'image uploadée et on l'enregistre dans public/images
-    $imageName = time().'.'.request()->img->getClientOriginalExtension();
-    request()->img->move(public_path('images'), $imageName);
+        $image = $request->img;
+        $imageName = time().'.'.$image->getClientOriginalExtension();
+        $destinationPath = public_path('/images');
 
-    $mail = request()->email;
-    $userId = \Auth::user()->id;
+        // on resize l'image à l'aide du package Image Intervention
+        $img = Image::make($image->getRealPath());
+        $img->resize(150, 150, function ($constraint) {
 
-    $data = [
-        'email' => $mail,
-        'picture' => 'images/' . $imageName,
-        'users_id' => $userId
-    ];
+		    $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$imageName);
+        
 
-    // On ajoute les données saisies ainsi que l'url de l'image dans la table Avatar
-    Avatar::insert($data);
+        // On prépare l'envoie en base de données
+        $mail = request()->email;
+        $userId = \Auth::user()->id;
 
-    // On retourne sur la page précédente avec un message de confirmation
-    return back()->with('success','Image envoyée avec succès !');
+        $data = [
+            'email' => $mail,
+            'picture' => 'images/' . $imageName,
+            'users_id' => $userId
+        ];
+
+        // On ajoute les données saisies ainsi que l'url de l'image dans la table Avatar
+        Avatar::insert($data);
+
+        // On retourne sur la page précédente avec un message de confirmation
+        return back()->with('success','Image envoyée avec succès !');
 
     }
 }
