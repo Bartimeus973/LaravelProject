@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,13 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/upload', 'ImgController@index')->name('imgUpload');
 
-Route::post('/upload', 'ImgController@imgUpload') -> name('formRoute');
+Route::post('/upload', 'ImgController@imgUpload')->name('formRoute');
 
 Route::get('/api/{userName?}', 'ApiController@displayAvatars')->name('showApi');
 
