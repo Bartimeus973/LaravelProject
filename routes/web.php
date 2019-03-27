@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,13 +17,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+// le middleware verified est utilisé pour vérifier le mail de l'utilisateur
 
-Route::get('/upload', 'ImgController@index')->name('imgUpload');
+Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
 
-Route::post('/upload', 'ImgController@imgUpload') -> name('formRoute');
+Route::get('/upload', 'ImgController@index')->middleware('verified')->name('imgUpload');
+
+Route::post('/upload', 'ImgController@imgUpload')->name('formRoute');
 
 Route::get('/api/{userName?}', 'ApiController@displayAvatars')->name('showApi');
 

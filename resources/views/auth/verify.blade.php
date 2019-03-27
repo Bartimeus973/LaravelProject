@@ -15,7 +15,7 @@
                     @endif
 
                     {{ __('Avant de continuer, merci de vérifier votre e-mail pour le lien de vérification.') }}
-                    {{ __('Si vous n\'avez pas reçu cet e-mail) }}, <a href="{{ route('verification.resend') }}">{{ __('cliquez ici pour en recevoir un autre') }}</a>.
+                    {{ __('Si vous n\'avez pas reçu cet e-mail' )}}, <a href="{{ route('verification.resend') }}">{{ __('cliquez ici pour en recevoir un autre') }}</a>.
                 </div>
             </div>
         </div>
