@@ -21,12 +21,13 @@ class ImgController extends Controller {
     // on vérifie les champs saisis par l'utilisateur
     $this->validate( $request, 
         [ 
-        'img' => 'required|mimes:jpeg,jpg,png',
+        'img' => 'required|mimes:jpeg,jpg,png|max:1000',
         'email' => 'required|email'
         ],
         [
         'img.required' => 'Vous devez sélectionner une image',
         'img.mimes' => 'Formats d\'image autorisés : JPEG, JPG ou PNG',
+        'img.max' => 'taille maximum 1 Mb',
         'email.required' => 'Vous devez saisir un e-mail'
         ]);
 
