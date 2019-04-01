@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use App\Avatar;
+use URL;
 
 
 class HomeController extends Controller
@@ -28,13 +29,16 @@ class HomeController extends Controller
     public function index()
     {
         try{
-        $userId = \Auth::user()->id;
-        $avatars = DB::table('avatars')->select('URL')->where('users_id', '=', $userId)->get();
+        $url = URL::to('/');
+        $idUser = \Auth::user()->id;
+        //$avatars = DB::table('avatars')->select('picture')->where('users_id', '=', $userId)->get();
+        $avatars = Avatar::where( 'users_id', $idUser )->get();
+
         }
         catch( \Exception $e ){
             dd($e);
         }
-        return view('home', ['avatars' => $avatars]);
+        return view('home', ['avatars' => $avatars, 'url' => $url ]);
     }
 
 }
