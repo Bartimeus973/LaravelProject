@@ -13,20 +13,14 @@ use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes(['verify' => true]);
 
 // le middleware verified est utilisé pour vérifier le mail de l'utilisateur
 
-Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
+Route::get('/', 'HomeController@index')->middleware('verified')->name('home');
+Route::delete('/delete/{avatarId}', 'HomeController@deleteRow')->middleware('verified')->name('deleteAvatar');
 
 Route::get('/upload', 'ImgController@index')->middleware('verified')->name('imgUpload');
-
-Route::post('/upload', 'ImgController@imgUpload')->name('formRoute');
+Route::post('/upload', 'ImgController@imgUpload')->middleware('verified')->name('formRoute');
 
 Route::get('/api/{userName?}', 'ApiController@displayAvatars')->name('showApi');
-
-Route::post('/profile/update', 'HomeController@updateProfile')->name('profile.update');

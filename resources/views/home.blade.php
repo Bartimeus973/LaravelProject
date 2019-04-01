@@ -35,13 +35,27 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if ($avatars != null)
                             @foreach ( $avatars as $avatar)
                                 <tr>
                                     <td><img src="{{ $url . '/' . $avatar->picture }}"/></td>
                                     <td>{{ $avatar->email }}</td>
-                                    <td><a href="">modifier</a></td>
+                                    <td>
+                                        <form action="{{ action('HomeController@deleteRow', $avatar->id) }}" method="POST" 
+                                            onSubmit="if(!confirm('Êtes vous certain de vouloir supprimer cet avatar ?')){return false;}">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="submit" value="supprimer" class="btn btn-danger btn-sm">
+                                        </form>
+                                        
+                                    </td>
                                 </tr>
                             @endforeach
+                            @else
+                                <div class="alert alert-danger alert-block">
+                                    <strong>Aucun avatar enregistré</strong>
+                                </div>
+                            @endif
                         </tbody>
                     </table>                    
                 </div>
@@ -49,4 +63,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    function confirmDelete(){
+        var result = confirm("Êtes vous sûr de vouloir supprimer cet avatar ?");
+        if(!result){
+            die();
+        }
+    };
+</script>
+
 @endsection

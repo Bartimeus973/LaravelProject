@@ -58,7 +58,7 @@ class ImgController extends Controller {
         Avatar::insert($data);
 
         // On retourne sur la page précédente avec un message de confirmation
-        return back()->with('success','Image envoyée avec succès !');
+        return back()->with('success','Avatar envoyé avec succès !');
 
     }
 }

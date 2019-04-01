@@ -26,19 +26,32 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        try{
-        $url = URL::to('/');
-        $idUser = \Auth::user()->id;
-        //$avatars = DB::table('avatars')->select('picture')->where('users_id', '=', $userId)->get();
-        $avatars = Avatar::where( 'users_id', $idUser )->get();
+    public function index(){
 
+        try{
+            $url = URL::to('/');
+            $idUser = \Auth::user()->id;
+            $avatars = Avatar::where( 'users_id', $idUser )->get();
+
+            if($avatars->isEmpty()){
+
+                $avatars = null;
+            }   
+            
+            return view('home', ['avatars' => $avatars, 'url' => $url ]);
         }
         catch( \Exception $e ){
             dd($e);
         }
-        return view('home', ['avatars' => $avatars, 'url' => $url ]);
+        
+    }
+
+    public function deleteRow(Request $request, $avatarId = ''){
+
+        $row = Avatar::find($avatarId);
+        $row->delete();
+
+        return back()->with('success','Avatar supprimé avec succès !');
     }
 
 }
