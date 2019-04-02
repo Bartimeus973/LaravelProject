@@ -63,7 +63,7 @@ class ApiController extends Controller
 
             return response()->json([
                 'version' => '2.0',
-                'avatar sizes' => ['50*50', '150*150', '300*300'],
+                'avatar sizes' => '150*150',
                 'default avatar size' => '150*150',
                 'supported format' => ['JPEG','JPG','PNG']
             ]);

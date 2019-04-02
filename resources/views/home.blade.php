@@ -64,13 +64,4 @@
     </div>
 </div>
 
-<script>
-    function confirmDelete(){
-        var result = confirm("Êtes vous sûr de vouloir supprimer cet avatar ?");
-        if(!result){
-            die();
-        }
-    };
-</script>
-
 @endsection

@@ -29,6 +29,7 @@ class HomeController extends Controller
     public function index(){
 
         try{
+            // on récupère la liste des avatars de l'utilisateur courant
             $url = URL::to('/');
             $idUser = \Auth::user()->id;
             $avatars = Avatar::where( 'users_id', $idUser )->get();
@@ -38,6 +39,7 @@ class HomeController extends Controller
                 $avatars = null;
             }   
             
+            // on renvoie la vue avec les avatars et l'url complète pour affichage
             return view('home', ['avatars' => $avatars, 'url' => $url ]);
         }
         catch( \Exception $e ){
@@ -46,12 +48,18 @@ class HomeController extends Controller
         
     }
 
-    public function deleteRow(Request $request, $avatarId = ''){
+    // suppression d'un avatar
+    public function deleteRow( $avatarId = '' ){
 
-        $row = Avatar::find($avatarId);
-        $row->delete();
+        try{
+            $row = Avatar::find($avatarId);
+            $row->delete();
 
-        return back()->with('success','Avatar supprimé avec succès !');
+            return back()->with('success','Avatar supprimé avec succès !');
+        }
+        catch( \Exception $e ){
+            dd($e);
+        }
     }
 
 }
