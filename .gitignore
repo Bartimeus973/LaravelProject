@@ -9,3 +9,15 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+Vagrantfile
+
+composer\.json
+
+composer\.lock
+
+after\.sh
+
+aliases
+
+\.env\.example
